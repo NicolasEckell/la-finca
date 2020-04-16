@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('importar', 'MainController@importar');
+Route::post('importarCategorias', 'MainController@importarCategorias');
