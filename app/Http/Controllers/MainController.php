@@ -48,7 +48,7 @@ class MainController extends Controller {
 			Excel::import(new ProductListadoImport, $file_input);
 			$this->processListado($_SESSION['data']);
 			if($N > 0)
-				abort(500,"Has ingresado un producto nuevo. Debes cargarlo primero la por Categorías, luego carga normal'");
+				abort(500,"Has ingresado un producto nuevo. Debes hacer la carga primero por Categorías, luego esta carga normal'");
 		}
 		else{
 			abort(500,"Falta ingresar el archivo ".$this->filename_listado);
