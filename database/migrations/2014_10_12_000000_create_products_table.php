@@ -17,8 +17,8 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->integer('code')->unsigned()->unique();
             $table->string('name',100);
-            $table->integer('stock');
-            $table->double('price', 10, 2);
+            $table->integer('stock')->default(0);
+            $table->double('price', 10, 2)->default(0);
             $table->string('categories',100)->nullable();
             $table->string('details',1024)->nullable();
             $table->string('vendor',100)->nullable();
