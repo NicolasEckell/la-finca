@@ -17,7 +17,11 @@
                 {!!Form::file('listado')!!}
             </div>
         </div>
-        <div class="d-flex justify-content-center mt-5">
+        <br><br>
+        <strong style="color:black">
+            Para actualizar productos previamente cargados, utilizar esta carga
+        </strong>
+        <div class="d-flex justify-content-center mt-3">
             {!!Form::submit('Siguiente',['class'=>'btn btn-success ml-3','id'=>'submit'])!!}
         </div>
         {!!Form::close()!!}
@@ -27,14 +31,18 @@
 
         {!!Form::open(['url'=>'importarCategorias', 'method'=>'POST','files'=>true])!!}
         <div class="d-flex mt-5">
-            <div class="d-flex flex-column align-items-start mr-5">
+            <div class="d-flex flex-column align-items-center">
                 <span style="color:black" class="mb-2">
-                    Cargar archivo de STOCK - categorías 'Productos stock generalizado'
+                    Cargar archivo de 'Categorías'
                 </span>
                 {!!Form::file('categorias')!!}
             </div>
         </div>
-        <div class="d-flex justify-content-center mt-5">
+        <br><br>
+        <strong style="color:black">
+            Para la carga de productos nuevos, utilice este carga para configurar la categoría
+        </strong>
+        <div class="d-flex justify-content-center mt-3">
             {!!Form::submit('Siguiente',['class'=>'btn btn-success ml-3','id'=>'submit'])!!}
         </div>
         {!!Form::close()!!}
