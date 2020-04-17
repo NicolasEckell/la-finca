@@ -9,9 +9,9 @@
 
     <title>La Finca</title>
     <!-- css: vendors -->
-    <link rel="stylesheet" href="{!!asset('css/materialdesignicons.css')!!}">
-    <link rel="stylesheet" href="{!!asset('css/app.css')!!}">
-    <link rel="stylesheet" href="{!!asset('css/style.css')!!}">
+    <link rel="stylesheet" href="{!!asset('css/materialdesignicons.css',true)!!}">
+    <link rel="stylesheet" href="{!!asset('css/app.css',true)!!}">
+    <link rel="stylesheet" href="{!!asset('css/style.css',true)!!}">
 
     <!-- css: DataTable library -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/b-1.5.6/b-colvis-1.5.6/b-html5-1.5.6/b-print-1.5.6/cr-1.5.0/r-2.2.2/datatables.min.css"/>
