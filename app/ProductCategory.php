@@ -8,8 +8,4 @@ class ProductCategory extends Model {
 
     protected $table = 'products_categories';
 
-    public function add($cat){
-    	
-    }
-
 }

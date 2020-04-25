@@ -82,16 +82,17 @@ class ExportController extends Controller {
 			$product = $products[$i];
 			$variants = $this->getVariants($product->categories()->first());
 
-			if(count($variants) == 0 && strcmp($product->tipo, "Unidad")){
+			if(count($variants) == 0){
 				$price = $product->price;
 				$weight = "";
 				$item = $this->createRow($product,$price,$weight);
 				array_push($data, $item);
 			}
-			else if(count($variants) > 0 && strcmp($product->tipo, "Peso")){
+			else if(count($variants) > 0){
 				for ($j=0; $j < count($variants); $j++) {
 					$price = $this->getPriceOfVariant((float) $variants[$j], (float) $product->price);
 					$weight = $variants[$j];
+					$product->tipo = "Peso";
 					$item = $this->createRow($product,$price,$weight);
 					array_push($data, $item);
 				}
@@ -101,13 +102,12 @@ class ExportController extends Controller {
 	}
 
 	public function createRow(Product $product, $price, $weight){
-		$str_weight = ($weight != "")?($weight." gramos"):(1);
 		$item = [];
 		$item[0] = $this->parseUrl($product->name);
 		$item[1] = $product->name;
 		$item[2] = $this->parseCategories($product->categories()->first());
 		$item[3] = $product->tipo;
-		$item[4] = $str_weight;
+		$item[4] = $this->parseWeight($weight);
 		$item[5] = "";
 		$item[6] = "";
 		$item[7] = "";
@@ -128,12 +128,25 @@ class ExportController extends Controller {
 		return $item;
 	}
 
-	public function parseUrl($name){
+	public function parseUrl(string $name): string {
 		return $this->seoUrl($name);
 	}
 
-	public function parseCategories(Category $child_cat){
+	public function parseCategories(Category $child_cat): string {
 		return $child_cat->getParsed();
+	}
+
+	public function parseWeight($weight): string {
+		if($weight == 1000) {
+			return "1 Kg";
+		}
+		else{
+			if($weight === "")
+				return "unidad";
+			else
+				return $weight." gramos";
+		}
+		
 	}
 
 	public function parseTags($name, $categories){
@@ -160,15 +173,15 @@ class ExportController extends Controller {
 		return $details;
 	}
 
-	function seoUrl($string) {
+	function seoUrl($str){
    		//Lower case everything
-		$string = strtolower($string);
+		$str = strtolower($str);
     	//Make alphanumeric (removes all other characters)
-		$string = preg_replace("/[^a-z0-9_\s-]/", "", $string);
+		$str = preg_replace("/[^a-z0-9_\s-]/", "", $str);
     	//Clean up multiple dashes or whitespaces
-		$string = preg_replace("/[\s-]+/", " ", $string);
+		$str = preg_replace("/[\s-]+/", " ", $str);
     	//Convert whitespaces and underscore to dash
-		$string = preg_replace("/[\s_]/", "-", $string);
-		return $string;
+		$str = preg_replace("/[\s_]/", "-", $str);
+		return $str;
 	}
 }

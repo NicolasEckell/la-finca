@@ -24,22 +24,23 @@ class ProductController extends Controller {
 		$type = "";
 
 		$match = preg_match("/( gr)|( ml) | (\d+((gr)|(ml)))/", $name);
-		if($match == 0){
-			$match = preg_match("/( x )/",$name);
-			if($match  == 0){
-				$type = "Unidad";
-			}
-			else{
-				$type = "Peso";
-			}
-		}
-		else{
+		if($match == 1){
 			$type = "Unidad";
 		}
-
-		$match = preg_match("/( kg) | (\d+(kg))/", $name);
-		if($match != 0){
-			$type = "Peso";
+		else{
+			$match = preg_match("/( x )/",$name);
+			if($match == 1){
+				$type = "Peso";
+			}
+			else{
+				$match = preg_match("/( kg)|(\d+(kg))|( kilo)/", $name);
+				if($match == 1){
+					$type = "Peso";
+				}
+				else{
+					$type = "Unidad";
+				}
+			}
 		}
 
 		return $type;

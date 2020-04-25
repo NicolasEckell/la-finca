@@ -13,7 +13,7 @@ class Category extends Model {
 	];
 
 	public function parent(){
-		return $this->hasOne('App\Category','parent_id','id')->first();
+		return $this->belongsTo('App\Category','parent_id','id')->first();
 	}
 
 	public function getParent(){
