@@ -79,6 +79,7 @@ class MainController extends Controller {
 			if($exist){
 				$exist->name = $product->name;
 				$exist->stock = $product->stock;
+				$exist->tipo = App::make('App\Http\Controllers\ProductController')->calculateTypeOfProduct($product->name);
 				$exist->save();
 			}
 			else{
@@ -113,12 +114,18 @@ class MainController extends Controller {
 			$new = $array[$i];
 			$old = App::make('App\Http\Controllers\ProductController')->findProductByCode($new->code);
 			if(!$old){
+				$new->tipo = App::make('App\Http\Controllers\ProductController')->calculateTypeOfProduct($new->name);
+				$cat = App::make('App\Http\Controllers\CategoryController')->createFromString($new->categories);
 				$new->save();
+				$new->addCategory($cat);
 				$N_new++;
 			}
 			else{
 				$old->categories = $new->categories;
+				$old->tipo = App::make('App\Http\Controllers\ProductController')->calculateTypeOfProduct($new->name);
+				$cat = App::make('App\Http\Controllers\CategoryController')->createFromString($new->categories);
 				$old->save();
+				$old->addCategory($cat);
 				$N_old++;
 			}
 		}
@@ -127,9 +134,10 @@ class MainController extends Controller {
 
 	private function generateCsv(){
 		$encoder = (new CharsetConverter())->inputEncoding('utf-8')->outputEncoding('iso-8859-3');
-		$data = App::make('App\Http\Controllers\ProductController')->getAllReady2Export();
+		$data = App::make('App\Http\Controllers\ExportController')->exportProducts();
 		$csv = Writer::createFromFileObject(new SplTempFileObject());
 		$csv->addFormatter($encoder);
+		$csv->setDelimiter(';');
 		$csv->insertOne($this->csv_header);
 		foreach ($data as $key => $item) {
 			$csv->insertOne($item);
