@@ -9,7 +9,7 @@ class Product extends Model {
     protected $table = 'products';
 
     protected $fillable = [
-        'code','name','stock','price','categories','details','vendor','buyDate'
+        'code','name','stock','price','categories','details','vendor','barcode','buyDate'
     ];
 
     public function categories(){
@@ -21,6 +21,14 @@ class Product extends Model {
     	if(!$val){
     		$this->categories()->attach($cat);
     	}
+    }
+
+    public function purge(){
+        $this->name = preg_replace('/\s+/', ' ',  $this->name);
+        $this->categories = preg_replace('/\s+/', ' ',  $this->categories);
+        $this->details = preg_replace('/\s+/', ' ',  $this->details);
+        $this->vendor = preg_replace('/\s+/', ' ',  $this->vendor);
+        $this->barcode = preg_replace('/\s+/', ' ',  $this->barcode);
     }
 
 }

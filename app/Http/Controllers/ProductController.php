@@ -19,30 +19,30 @@ class ProductController extends Controller {
 		return Product::all();
 	}
 
-	public function calculateTypeOfProduct(string $name){
-		$name = strtolower($name);
-		$type = "";
+	// public function calculateTypeOfProduct(string $name){
+	// 	$name = strtolower($name);
+	// 	$type = "";
 
-		$match = preg_match("/( gr)|( ml) | (\d+((gr)|(ml)))/", $name);
-		if($match == 1){
-			$type = "Unidad";
-		}
-		else{
-			$match = preg_match("/( x )/",$name);
-			if($match == 1){
-				$type = "Peso";
-			}
-			else{
-				$match = preg_match("/( kg)|(\d+(kg))|( kilo)/", $name);
-				if($match == 1){
-					$type = "Peso";
-				}
-				else{
-					$type = "Unidad";
-				}
-			}
-		}
+	// 	$match = preg_match("/( gr)|( ml) | (\d+((gr)|(ml)))/", $name);
+	// 	if($match == 1){
+	// 		$type = "Unidad";
+	// 	}
+	// 	else{
+	// 		$match = preg_match("/( x )/",$name);
+	// 		if($match == 1){
+	// 			$type = "Peso";
+	// 		}
+	// 		else{
+	// 			$match = preg_match("/( kg)|(\d+(kg))|( kilo)/", $name);
+	// 			if($match == 1){
+	// 				$type = "Peso";
+	// 			}
+	// 			else{
+	// 				$type = "Unidad";
+	// 			}
+	// 		}
+	// 	}
 
-		return $type;
-	}
+	// 	return $type;
+	// }
 }

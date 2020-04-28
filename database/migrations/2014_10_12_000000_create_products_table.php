@@ -17,12 +17,13 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->integer('code')->unsigned()->unique();
             $table->string('name',150);
+            $table->string('type',50)->nullable();
             $table->integer('stock')->default(0);
             $table->double('price', 10, 2)->default(0);
             $table->string('categories',100)->nullable();
             $table->string('details',1024)->nullable();
             $table->string('vendor',100)->nullable();
-            $table->string('tipo',50)->nullable();
+            $table->string('barcode',100)->nullable();
             $table->timestamps();
         });
     }

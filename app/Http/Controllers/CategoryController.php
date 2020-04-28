@@ -11,8 +11,8 @@ class CategoryController extends Controller {
 		return Category::where('id',$id)->first();
 	}
 
-	public function findCategoryByName(string $name){
-		return Category::where('name',$name)->first();
+	public function findCategoryByName(string $name, $parent_id){
+		return Category::where('name',$name)->where('parent_id',$parent_id)->first();
 	}
 
 	public function getAll(){
@@ -20,11 +20,11 @@ class CategoryController extends Controller {
 	}
 
 	public function getOrCreateCategory(string $name,int $parent_id = null){
-		$exist = $this->findCategoryByName($name);
+		$exist = $this->findCategoryByName($name,$parent_id);
 		if($exist) return $exist;
 
 		$cat = new Category();
-		$cat->name = $name;
+		$cat->name = $this->autocorrect($name);
 		$cat->parent_id = $parent_id;
 		$cat->save();
 		return $cat;
@@ -46,4 +46,21 @@ class CategoryController extends Controller {
 
 		return $hija;
 	}
+
+	public function autocorrect($str){
+		$arr = explode(" ",$str);
+		$aux = "";
+		for ($i=0; $i < count($arr) ; $i++) {
+			$value = $arr[$i];
+			$value = strtolower($value);
+			if(strlen($value) > 1)
+				$aux = $aux.ucwords($value);
+			else
+				$aux = $aux.$value;
+			if($i + 1 < count($arr))
+				$aux = $aux." ";
+		}
+		return $aux;
+	}
+
 }

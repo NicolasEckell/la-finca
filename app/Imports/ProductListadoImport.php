@@ -19,6 +19,7 @@ class ProductListadoImport implements ToCollection, WithStartRow {
                 'price'         => $row[4],
                 'details'       => $row[9],
                 'vendor'        => $row[19],
+                'barcode'       => $row[21]
             ]);
             array_push($data,$product);
         }

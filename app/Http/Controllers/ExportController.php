@@ -16,56 +16,41 @@ class ExportController extends Controller {
 
 	public function getVariants(Category $child_cat): array{
 		$parent_cat = $child_cat->getParent();
-		if($child_cat->name == "Al Peso"){
-			if($parent_cat->name == "Aceitunas y Encurtidos"){
+		if(strcmp($child_cat->name, "Al Peso") == 0){
+			if(strcmp($parent_cat->name,"Aceitunas y Encurtidos") == 0){
 				return [100,150,250,500];
 			}
-			else if($parent_cat->name == "Panificados"){
+			else if(strcmp($parent_cat->name,"Panificacion") == 0){
 				return [250,600,1000];
 			}
 		}
 		else {
-			switch ($child_cat->name) {
-				case 'Barras Feteados':
+			if(strcmp($child_cat->name, 'Barras Feteados') == 0)
 				return [200,250,300,500];
-				break;
-				case 'Cremosos / Mozzarella / Por Salut':
+			elseif(strcmp($child_cat->name, 'Cremosos / Mozzarella / Por Salut') == 0)
 				return [400,600,1000];
-				break;
-				case 'Semiduros':
+			elseif(strcmp($child_cat->name, 'Semiduros') == 0)
 				return [400,600,1000];
-				break;
-				case 'Duros':
+			elseif(strcmp($child_cat->name, 'Duros') == 0)
 				return [400,600,1000];
-				break;
-				case 'Rallados':
+			elseif(strcmp($child_cat->name, 'Rallados') == 0)
 				return [100,150,250,500];
-				break;
-				case 'Especiales Fraccionados':
+			elseif(strcmp($child_cat->name, 'Especiales') == 0)
 				return [150,250,500];
-				break;
-				case 'Cocidos y Arrollados':
+			elseif(strcmp($child_cat->name, 'Cocidos y Arrollados') == 0)
 				return [200,250,300,500];
-				break;
-				case 'Crudos':
+			elseif(strcmp($child_cat->name, 'Crudos') == 0)
 				return [100,150,250,300,500];
-				break;
-				case 'Salames Feteados y Mortadela':
+			elseif(strcmp($child_cat->name, 'Salames Feteados y Mortadelas') == 0)
 				return [150,250,300,500];
-				break;
-				case 'Ahumados':
+			elseif(strcmp($child_cat->name, 'Ahumados') == 0)
 				return [150,250,300,500];
-				break;
-				case 'Frutos Secos y Deshidratados':
+			elseif(strcmp($child_cat->name, 'Frutas Secas y Deshidratadas') == 0)
 				return [100,150,250,500];
-				break;
-				case 'Elaborados':
+			elseif(strcmp($child_cat->name, 'Elaborados') == 0)
 				return [460,620,1000];
-				break;
-				default:
+			else
 				return [];
-				break;
-			}
 		}
 	}
 
@@ -74,25 +59,39 @@ class ExportController extends Controller {
 		return $price;
 	}
 
+	public function isValidProduct(Product $product){
+		$isValid = true;
+		if((int) $product->price == 0 || $product->categories()->first()->isRoot()){
+			$isValid = false;
+		}
+		return $isValid;
+	}
+
 	public function exportProducts(){
 		$products = $this->getProducts();
 		$data = [];
 
 		for ($i=0; $i < count($products) ; $i++) {
 			$product = $products[$i];
+			$product->purge();
+			if(!$this->isValidProduct($product))
+				continue;
 			$variants = $this->getVariants($product->categories()->first());
 
 			if(count($variants) == 0){
+				$product->type = "Unidad";
+				$product->save();
 				$price = $product->price;
 				$weight = "";
 				$item = $this->createRow($product,$price,$weight);
 				array_push($data, $item);
 			}
 			else if(count($variants) > 0){
+				$product->type = "Peso";
+				$product->save();
 				for ($j=0; $j < count($variants); $j++) {
 					$price = $this->getPriceOfVariant((float) $variants[$j], (float) $product->price);
 					$weight = $variants[$j];
-					$product->tipo = "Peso";
 					$item = $this->createRow($product,$price,$weight);
 					array_push($data, $item);
 				}
@@ -103,10 +102,10 @@ class ExportController extends Controller {
 
 	public function createRow(Product $product, $price, $weight){
 		$item = [];
-		$item[0] = $this->parseUrl($product->name);
+		$item[0] = $this->parseUrl($product->code);
 		$item[1] = $product->name;
 		$item[2] = $this->parseCategories($product->categories()->first());
-		$item[3] = $product->tipo;
+		$item[3] = $this->parseType($product->type);
 		$item[4] = $this->parseWeight($weight);
 		$item[5] = "";
 		$item[6] = "";
@@ -116,8 +115,8 @@ class ExportController extends Controller {
 		$item[10] = "";
 		$item[11] = $weight;
 		$item[12] = $product->stock;
-		$item[13] = "";
-		$item[14] = "";
+		$item[13] = $product->code;
+		$item[14] = $product->barcode;
 		$item[15] = "SI";
 		$item[16] = "NO";
 		$item[17] = $product->details;
@@ -136,17 +135,24 @@ class ExportController extends Controller {
 		return $child_cat->getParsed();
 	}
 
+	public function parseType($type){
+		if($type == "Peso")
+			return $type;
+		else
+			return "";
+	}
+
 	public function parseWeight($weight): string {
 		if($weight == 1000) {
 			return "1 Kg";
 		}
 		else{
 			if($weight === "")
-				return "unidad";
+				return "";
 			else
 				return $weight." gramos";
 		}
-		
+
 	}
 
 	public function parseTags($name, $categories){

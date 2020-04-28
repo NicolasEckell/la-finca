@@ -16,6 +16,13 @@ class Category extends Model {
 		return $this->belongsTo('App\Category','parent_id','id')->first();
 	}
 
+	public function isRoot(){
+		if($this->parent_id == null)
+			return true;
+		else
+			return false;
+	}
+
 	public function getParent(){
 		$parent = $this->parent();
 		if($parent){
@@ -35,5 +42,4 @@ class Category extends Model {
 			return $this->name;
 		}
 	}
-
 }

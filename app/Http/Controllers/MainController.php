@@ -79,7 +79,7 @@ class MainController extends Controller {
 			if($exist){
 				$exist->name = $product->name;
 				$exist->stock = $product->stock;
-				$exist->tipo = App::make('App\Http\Controllers\ProductController')->calculateTypeOfProduct($product->name);
+				// $exist->type = App::make('App\Http\Controllers\ProductController')->calculateTypeOfProduct($product->name);
 				$exist->save();
 			}
 			else{
@@ -98,6 +98,7 @@ class MainController extends Controller {
 				$exist->price = $product->price;
 				$exist->details = $product->details;
 				$exist->vendor = $product->vendor;
+				$exist->barcode = $product->barcode;
 				$exist->save();
 			}
 			else{
@@ -114,7 +115,7 @@ class MainController extends Controller {
 			$new = $array[$i];
 			$old = App::make('App\Http\Controllers\ProductController')->findProductByCode($new->code);
 			if(!$old){
-				$new->tipo = App::make('App\Http\Controllers\ProductController')->calculateTypeOfProduct($new->name);
+				// $new->type = App::make('App\Http\Controllers\ProductController')->calculateTypeOfProduct($new->name);
 				$cat = App::make('App\Http\Controllers\CategoryController')->createFromString($new->categories);
 				$new->save();
 				$new->addCategory($cat);
@@ -122,7 +123,7 @@ class MainController extends Controller {
 			}
 			else{
 				$old->categories = $new->categories;
-				$old->tipo = App::make('App\Http\Controllers\ProductController')->calculateTypeOfProduct($new->name);
+				// $old->type = App::make('App\Http\Controllers\ProductController')->calculateTypeOfProduct($new->name);
 				$cat = App::make('App\Http\Controllers\CategoryController')->createFromString($new->categories);
 				$old->save();
 				$old->addCategory($cat);
