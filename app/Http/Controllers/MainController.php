@@ -54,7 +54,7 @@ class MainController extends Controller {
 		else{
 			abort(500,"Falta ingresar el archivo ".$this->filename_listado);
 		}
-		$this->generateCsv();
+		abort(200, "Productos Actualizados");
 	}
 
 	public function importarCategorias(request $request){
@@ -83,7 +83,7 @@ class MainController extends Controller {
 				$exist->save();
 			}
 			else{
-				$product->delete();
+				// $product->delete();
 				$N++;
 			}
 		}
@@ -103,7 +103,7 @@ class MainController extends Controller {
 				$exist->save();
 			}
 			else{
-				$product->delete();
+				// $product->delete();
 				$N++;
 			}
 		}
@@ -133,6 +133,10 @@ class MainController extends Controller {
 			}
 		}
 		return [$N_old,$N_new];
+	}
+
+	public function exportar(){
+		return $this->generateCsv();
 	}
 
 	private function generateCsv(){

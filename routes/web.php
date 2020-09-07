@@ -17,3 +17,4 @@ Route::get('/', function () {
 
 Route::post('importar', 'MainController@importar');
 Route::post('importarCategorias', 'MainController@importarCategorias');
+Route::get('exportar', 'MainController@exportar');
