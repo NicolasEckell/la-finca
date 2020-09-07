@@ -83,10 +83,11 @@ class MainController extends Controller {
 				$exist->save();
 			}
 			else{
+				$product->delete();
 				$N++;
 			}
 		}
-		return $N;
+		return 0;
 	}
 
 	private function processListado($array){
@@ -102,10 +103,11 @@ class MainController extends Controller {
 				$exist->save();
 			}
 			else{
+				$product->delete();
 				$N++;
 			}
 		}
-		return $N;
+		return 0;
 	}
 
 	private function processCategories($array){

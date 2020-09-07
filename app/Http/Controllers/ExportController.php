@@ -114,7 +114,7 @@ class ExportController extends Controller {
 		$item[9] = $price;
 		$item[10] = "";
 		$item[11] = $weight;
-		$item[12] = $product->stock;
+		$item[12] = "";//$product->stock;
 		$item[13] = $product->code;
 		$item[14] = $product->barcode;
 		$item[15] = "SI";
