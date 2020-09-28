@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Category;
+use Flash;
 
 class CategoryController extends Controller {
 
@@ -63,6 +64,14 @@ class CategoryController extends Controller {
 	public function delete($id){
 		$category = $this->getById($id);
 		if(!$category) return -1;
+
+		if(count($category->children) > 0){
+			Flash::error('No es posible eliminar una categoría que tenga subcategorías');
+			return redirect()->route('categories');
+		}
+		else{
+			Flash::success('Categoría eliminada!');
+		}
 
 		$category->delete();
 		return redirect()->route('categories');
