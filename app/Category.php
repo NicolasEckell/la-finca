@@ -20,6 +20,9 @@ class Category extends Model {
 		return $this->hasMany('App\Category','parent_id','id');
 	}
 
+	public function products(){
+		return $this->belongsToMany('App\Product','products_categories','category_id','product_id')->withTimestamps();
+	}
 
 	public function isRoot(){
 		if($this->parent_id == null)

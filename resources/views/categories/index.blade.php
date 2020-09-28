@@ -4,11 +4,11 @@
 @endsection
 
 @section('content')
-
 <div class="row justify-content-center mt-3">
 	<div class="col-lg-12 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-header">
+				@include('flash::message')
 				<a class="badge badge-outline-info badge-button" href="/categories/create">
 					Nueva Categoria
 				</a>
@@ -20,6 +20,7 @@
 							<tr>
 								<th>Nº</th>
 								<th>Nombre</th>
+								<th>Cantidad de productos asociados</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
@@ -27,7 +28,10 @@
 							@foreach($categories as $key => $category)
 							<tr>
 								<td>{{ $key+1 }}</td>
-								<td style="{{ ($category->parent_id == null)?'background-color: darkorange':''}}">{{ $category->getFormatted() }}</td>
+								<td style="{{ ($category->parent_id == null)?'background-color: darkorange':''}}">
+									{{ $category->getFormatted() }}
+								</td>
+								<th>{{ count($category->products) }}</th>
 								<td>
 									<a class="badge badge-outline-info badge-button" href="/categories/{{ $category->id }}/edit">
 										Editar Categoria

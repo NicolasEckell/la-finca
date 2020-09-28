@@ -69,6 +69,10 @@ class CategoryController extends Controller {
 			Flash::error('No es posible eliminar una categoría que tenga subcategorías');
 			return redirect()->route('categories');
 		}
+		elseif(count($category->products) > 0){
+			Flash::error('No es posible eliminar una categoría que tenga productos asociados');
+			return redirect()->route('categories');
+		}
 		else{
 			Flash::success('Categoría eliminada!');
 		}
