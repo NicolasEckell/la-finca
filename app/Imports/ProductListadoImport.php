@@ -12,7 +12,14 @@ class ProductListadoImport implements ToCollection, WithStartRow {
 
     public function collection(Collection $collection){
         $productController = App::make('App\Http\Controllers\ProductController');
-        $N = 0;
+
+        $productController->turnOffAll();
+
+        $N = [
+            'new' => 0,
+            'update' => 0,
+            'delete' => 0,
+        ];
 
         foreach ($collection as $row){
             $product = new Product([
@@ -30,11 +37,16 @@ class ProductListadoImport implements ToCollection, WithStartRow {
                 $exist->details = $product->details;
                 $exist->vendor = $product->vendor;
                 $exist->barcode = $product->barcode;
+                $exist->showOnStore = true;
                 $exist->save();
-                $N++;
+                $N['update']++;
+            }
+            else{
+                $N['new']++;
             }
         }
 
+        $N['delete'] = $productController->getTurnedOff();
         $_SESSION['N'] = $N;
     }
 

@@ -86,6 +86,7 @@ class ExportController extends Controller {
 		foreach ($products as $key => $product) {
 			if(!$this->isValidProduct($product)){
 				$product->type = "No especificado";
+				$product->showOnStore = false;
 				$product->save();
 				continue;
 			}

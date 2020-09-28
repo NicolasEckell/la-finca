@@ -29,7 +29,7 @@ class MainController extends Controller {
 			$_SESSION['data'] = [];
 			Excel::import(new ProductListadoImport, $file_input);
 			$N = $_SESSION['N'];
-			abort(200,$N." Productos Actualizados.");
+			abort(200,$N['new']." Productos Nuevos (pero no fueron creados, deben ser ingresados primero desde el archivo de Stock). ".$N['update']." Productos Actualizados. ".$N['delete']." Productos detectados Fuera de la Tienda");
 		}
 		else{
 			abort(200,"Error!");

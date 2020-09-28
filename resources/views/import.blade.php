@@ -26,7 +26,9 @@
                 {!!Form::file('listado',['class' => 'mt-3'])!!}
                 <p class="card-text mt-3" style="color:orange;">
                     Este <strong>ARCHIVO</strong><br>
-                    ACTUALIZA: precio, detalle, proveedor y codigo de barras
+                    1) ACTUALIZA: precio, detalle, proveedor y codigo de barras.<br>
+                    2) NO CREA nuevos productos. Si se han ingresado nuevos productos, se notificará al final del proceso.<br>
+                    3) DESACTIVA PRODUCTOS. Si existía algún producto, pero no se ingresó en este archivo, se lo deja como NO MOSTRAR EN TIENDA, de lo contrario si está aquí se mostrará en tienda.
                 </p>
                 <div class="d-flex justify-content-center mt-3">
                     {!!Form::submit('Siguiente',['class'=>'btn btn-success ml-3','id'=>'submit'])!!}

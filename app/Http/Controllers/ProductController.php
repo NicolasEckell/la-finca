@@ -47,10 +47,24 @@ class ProductController extends Controller {
 			$product->variant_id = null;
 		}
 
-		$cats = $product->categories()->first();
-		if($cats)
-			$product->categories()->detach();
-		$product->addCategory($category);
+		if(isset($request['showOnStore'])){
+			$product->showOnStore = true;
+		}
+		else{
+			$product->showOnStore = false;	
+		}
+
+		$cat = $product->categories()->first();
+		if($cat){
+			if($cat->id !== $category->id){
+				$product->categories()->detach();
+				$product->addCategory($category);
+			}
+		}
+		else{
+			$product->addCategory($category);
+		}
+
 		$product->save();
 
 		return redirect()->route('products');

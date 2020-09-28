@@ -53,6 +53,9 @@
 	<input hidden name="id" id="id" value="{{ $product->id }}" /><br>
 	<h5>Seleccione la variante y la categoría adecuada para el presente producto</h5><br>
 
+	<label>Mostrar en Tienda</label>
+	<input type="checkbox" name="showOnStore" id="showOnStore" {{ $product->showOnStore?'checked':'' }}/>
+	<br>
 	<label>Variante</label>
 	<select name="variant_id">
 		<option value="0" selected>Sin Variantes</option>
