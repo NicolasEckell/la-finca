@@ -21,7 +21,7 @@ class Product extends Model {
     	if(!$val){
     		$this->categories()->attach($cat);
             $val = $cat;
-    	}
+        }
         $this->fixCategories($val);
     }
 
@@ -49,6 +49,14 @@ class Product extends Model {
         if($this->variant_id){
             $variant = $this->belongsTo('App\Variant','variant_id','id')->first();
             return 'ID '.$variant->id.': '.$variant->variants;
+        }
+        return "";
+    }
+
+    public function getCategory(){
+        $cat = $this->categories()->first();
+        if($cat){
+            return $cat->getFormatted();
         }
         return "";
     }
