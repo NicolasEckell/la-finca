@@ -49,11 +49,7 @@ class MainController extends Controller {
 			abort(200,"Error!");
 		}
 	}
-
-	public function process(){
-		
-	}
-
+	
 	public function corrector(){
 		App::make('App\Http\Controllers\ExportController')->corrector();
 		abort(200,"Todo OK!");

@@ -22,7 +22,6 @@ Route::get('/export', function () {
 Route::post('importListado', 'MainController@importListado');
 Route::post('importStock', 'MainController@importStock');
 
-Route::get('process', 'MainController@process');
 Route::get('exportar', 'MainController@exportar');
 
 Route::get('/products','ProductController@index')->name('products');

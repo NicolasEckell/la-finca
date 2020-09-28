@@ -204,7 +204,6 @@ class ExportController extends Controller {
 			else
 				return $weight." gramos";
 		}
-
 	}
 
 	public function parseTags($name, $categories){
