@@ -7,20 +7,8 @@ use App\Category;
 
 class CategoryController extends Controller {
 
-	public function findCategoryById(int $id){
-		return Category::where('id',$id)->first();
-	}
-
-	public function findCategoryByName(string $name, $parent_id){
-		return Category::where('name',$name)->where('parent_id',$parent_id)->first();
-	}
-
-	public function getAll(){
-		return Category::all();
-	}
-
 	public function getOrCreateCategory(string $name,int $parent_id = null){
-		$exist = $this->findCategoryByName($name,$parent_id);
+		$exist = $this->getCategoryByName($name,$parent_id);
 		if($exist) return $exist;
 
 		$cat = new Category();
@@ -63,4 +51,36 @@ class CategoryController extends Controller {
 		return $aux;
 	}
 
+	public function getById(int $id){
+		return Category::where('id',$id)->first();
+	}
+
+	public function getCategoryByName(string $name, $parent_id){
+		return Category::where('name',$name)->where('parent_id',$parent_id)->first();
+	}
+
+	public function getAll(){
+		return Category::all();
+	}
+
+	public function getListed(){
+		$categories = Category::where('parent_id', null)->get();
+        $list = array();
+        foreach ($categories as $key => $category) {
+            $list = array_merge($list,$this->treeView($category));
+        }
+        return $list;
+	}
+
+	private function treeView($category, $prefix = ""){
+		$children = $category->children;
+		$disabled = (count($children) > 0)?true:false;
+		$list[] = ['id' => $category->id,'name' => $prefix.$category->name,'disabled' => $disabled];
+		if(count($children) > 0){
+			foreach ($children as $key => $child) {
+				$list = array_merge($list, $this->treeView($child,$prefix.($key+1).". "));
+			}
+		}
+		return $list;
+	}
 }

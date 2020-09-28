@@ -6,13 +6,15 @@ use App\Product;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithStartRow;
+use App;
 
 class ProductListadoImport implements ToCollection, WithStartRow {
 
-    public function collection(Collection $rows){
-        $data = $_SESSION['data'];
-        
-        foreach ($rows as $row){
+    public function collection(Collection $collection){
+        $productController = App::make('App\Http\Controllers\ProductController');
+        $N = 0;
+
+        foreach ($collection as $row){
             $product = new Product([
                 'code'          => $row[0],
                 'name'          => $row[1],
@@ -21,10 +23,19 @@ class ProductListadoImport implements ToCollection, WithStartRow {
                 'vendor'        => $row[19],
                 'barcode'       => $row[21]
             ]);
-            array_push($data,$product);
+            $exist = $productController->findProductByCode($product->code);
+            if($exist){
+                //Producto existente, actualizar precio, detalles, proveedor y codigo de barras
+                $exist->price = $product->price;
+                $exist->details = $product->details;
+                $exist->vendor = $product->vendor;
+                $exist->barcode = $product->barcode;
+                $exist->save();
+                $N++;
+            }
         }
 
-        $_SESSION['data'] = $data;
+        $_SESSION['N'] = $N;
     }
 
     public function startRow(): int{

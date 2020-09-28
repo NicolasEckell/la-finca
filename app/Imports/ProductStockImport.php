@@ -6,23 +6,52 @@ use App\Product;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithStartRow;
+use App;
 
 class ProductStockImport implements ToCollection, WithStartRow {
 
-    public function collection(Collection $rows){
-        $data = $_SESSION['data'];
+    public function collection(Collection $collection){
+        // $data = $_SESSION['data'];
+        $productController = App::make('App\Http\Controllers\ProductController');
+        $categoryController = App::make('App\Http\Controllers\CategoryController');
         
-        foreach ($rows as $row){
-            $product = new Product([
+        $productController->turnOffAll();
+
+        $N = [
+            'new' => 0,
+            'update' => 0,
+            'delete' => 0,
+        ];
+
+        foreach ($collection as $row){
+            $newProduct = new Product([
                 'code'          => $row[0],
-                'name'          => $row[1], 
+                'name'          => $row[1],
                 'categories'    => $row[2],
                 'stock'         => $row[5],
+                'showOnStore'   => true,
             ]);
-            array_push($data,$product);
+            $code = $row[0];
+            $exist = $productController->findProductByCode($code);
+            if(!$exist){
+                //Nuevo producto, agregar categoria
+                // $cat = $categoryController->createFromString($newProduct->categories);
+                $newProduct->save();
+                // $newProduct->addCategory($cat);
+                $N['new']++;
+            }
+            else{
+                //Producto existente, ignorar la categoria, actualizar stock y nombre
+                $exist->name = $newProduct->name;
+                $exist->stock = $newProduct->stock;
+                $exist->showOnStore = true;
+                $exist->save();
+                $N['update']++;
+            }
         }
 
-        $_SESSION['data'] = $data;
+        $N['delete'] = $productController->getTurnedOff();
+        $_SESSION['N'] = $N;
     }
 
     public function startRow(): int{

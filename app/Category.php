@@ -16,6 +16,11 @@ class Category extends Model {
 		return $this->belongsTo('App\Category','parent_id','id')->first();
 	}
 
+	public function children(){
+		return $this->hasMany('App\Category','parent_id','id');
+	}
+
+
 	public function isRoot(){
 		if($this->parent_id == null)
 			return true;
@@ -30,6 +35,16 @@ class Category extends Model {
 		}
 		else{
 			return $this;
+		}
+	}
+
+	public function getFormatted(){
+		$parent = $this->parent();
+		if($parent){
+			return $parent->getParsed().', '.$this->name;
+		}
+		else{
+			return $this->name;
 		}
 	}
 

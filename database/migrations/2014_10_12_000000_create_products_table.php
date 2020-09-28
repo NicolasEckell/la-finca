@@ -21,9 +21,12 @@ class CreateProductsTable extends Migration
             $table->integer('stock')->nullable();
             $table->double('price', 10, 2)->default(0);
             $table->string('categories',100)->nullable();
+            $table->integer('variant_id')->unsigned()->nullable();
+            $table->foreign('variant_id')->references('id')->on('variants')->onDelete('set null');
             $table->string('details',1024)->nullable();
             $table->string('vendor',100)->nullable();
             $table->string('barcode',100)->nullable();
+            $table->boolean('showOnStore')->default(true);
             $table->timestamps();
         });
     }

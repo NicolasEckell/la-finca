@@ -15,6 +15,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('importar', 'MainController@importar');
-Route::post('importarCategorias', 'MainController@importarCategorias');
+Route::get('/export', function () {
+    return view('export');
+});
+
+Route::post('importListado', 'MainController@importListado');
+Route::post('importStock', 'MainController@importStock');
+
+Route::get('process', 'MainController@process');
 Route::get('exportar', 'MainController@exportar');
+
+Route::get('/products','ProductController@index')->name('products');
+Route::get('/products/{id}/edit','ProductController@edit');
+Route::post('/products/{id}','ProductController@update');
+
+Route::get('variants', 'VariantController@index')->name('variants');
+Route::get('variants/create', 'VariantController@create');
+Route::post('variants', 'VariantController@store');
+Route::get('variants/{id}/edit', 'VariantController@edit');
+Route::post('variants/{id}', 'VariantController@update');
+
+Route::get('corrector', 'MainController@corrector');

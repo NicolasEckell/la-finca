@@ -61,34 +61,81 @@ class ExportController extends Controller {
 
 	public function isValidProduct(Product $product){
 		$isValid = true;
-		if((int) $product->price == 0 || $product->categories()->first()->isRoot()){
+		if((int) $product->price == 0 || $product->categories()->first()){
 			$isValid = false;
+			if($product->categories()->first()->isRoot())
+				$isValid = false;
+			else
+				$isValid = true;
 		}
 		return $isValid;
+	}
+
+	private function correctorCategories(){
+		$products = $this->getProducts();
+		$categoryController = App::make('App\Http\Controllers\CategoryController');
+		foreach ($products as $key => $product) {
+            $cat = $categoryController->createFromString($product->categories);
+			$product->save();
+            $product->addCategory($cat);
+		}
+	}
+
+	private function correctorVariants(){
+		$products = $this->getProducts();
+		foreach ($products as $key => $product) {
+			if(!$this->isValidProduct($product)){
+				$product->type = "No especificado";
+				$product->save();
+				continue;
+			}
+			$variants = $this->getVariants($product->categories()->first());
+			if(count($variants) == 0){
+				$product->type = "Unidad";
+				$product->save();
+			}
+			else if(count($variants) > 0){
+				$product->type = "Peso";
+				$product->save();
+
+				$COREvariants = app()->make('\App\Http\Controllers\VariantController')->getAll();
+				for ($j=0; $j < count($COREvariants); $j++) {
+					$CORE = json_decode($COREvariants[$j]->variants);
+					for ($k=0; $k < count($CORE); $k++) {
+						if((float)$CORE[$k] != (float) $variants[$k]){
+							continue 2;
+						}
+					}
+					$product->variant_id = $COREvariants[$j]->id;
+					$product->save();
+					continue 2;
+				}
+			}
+		}
+	}
+
+	public function corrector(){
+		$this->correctorCategories();
+		$this->correctorVariants();
 	}
 
 	public function exportProducts(){
 		$products = $this->getProducts();
 		$data = [];
 
-		for ($i=0; $i < count($products) ; $i++) {
-			$product = $products[$i];
+		foreach ($products as $key => $product) {
 			$product->purge();
-			if(!$this->isValidProduct($product))
-				continue;
-			$variants = $this->getVariants($product->categories()->first());
 
-			if(count($variants) == 0){
-				$product->type = "Unidad";
-				$product->save();
+			if(strcmp($product->type,"Unidad") == 0){
 				$price = $product->price;
 				$weight = "";
 				$item = $this->createRow($product,$price,$weight);
 				array_push($data, $item);
 			}
-			else if(count($variants) > 0){
-				$product->type = "Peso";
-				$product->save();
+			else if(strcmp($product->type,"Peso") == 0){
+				$variant = $product->variant();
+				if(!$variant) continue;
+				$variants = json_decode($variant->variants);
 				for ($j=0; $j < count($variants); $j++) {
 					$price = $this->getPriceOfVariant((float) $variants[$j], (float) $product->price);
 					$weight = $variants[$j];
@@ -117,7 +164,7 @@ class ExportController extends Controller {
 		$item[12] = "";//$product->stock;
 		$item[13] = $product->code;
 		$item[14] = $product->barcode;
-		$item[15] = "SI";
+		$item[15] = $this->parseBoolean($product->showOnStore);
 		$item[16] = "NO";
 		$item[17] = $product->details;
 		$item[18] = $this->parseTags($product->name, $product->categories);
@@ -125,6 +172,11 @@ class ExportController extends Controller {
 		$item[20] = $this->parseSeoDes($product->details);
 		$item[21] = $product->vendor;
 		return $item;
+	}
+
+	public function parseBoolean($val): string{
+		if($val) return "SI";
+		else return "NO";
 	}
 
 	public function parseUrl(string $name): string {
