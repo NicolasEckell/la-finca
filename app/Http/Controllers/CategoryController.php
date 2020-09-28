@@ -7,6 +7,67 @@ use App\Category;
 
 class CategoryController extends Controller {
 
+	public function index(){
+		$categories = $this->getListed(false);
+		return view('categories.index')->with('categories',$categories);
+	}
+
+	public function create(){
+		$categories = $this->getListed(false);
+		return view('categories.create')->with('categories',$categories);
+	}
+
+	public function edit($id){
+		$category = $this->getById($id);
+		return view('categories.edit')->with('category',$category);
+	}
+
+	public function store(Request $request){
+
+		if(!isset($request['parent_id']) || !isset($request['name']))
+			return -1;
+
+		$parent_id = null;
+		if($request['parent_id'] != 0){
+			$parent = $this->getById($request['parent_id']);
+			if(!$parent)
+				return -1;
+			else
+				$parent_id = $parent->id;
+		}
+
+		$category = new Category();
+		$category->name = $request['name'];
+		$category->parent_id = $parent_id;
+		$category->save();
+
+		return redirect()->route('categories');
+	}
+
+	public function update(Request $request){
+		if(!isset($request['id']))
+			return -1;
+
+		$category = $this->getById($request['id']);
+		if(!$category) return -1;
+
+		if(!isset($request['name']))
+			return -1;
+
+		$category->name = $request['name'];
+		$category->save();
+
+		return redirect()->route('categories');
+	}
+
+	public function delete($id){
+		$category = $this->getById($id);
+		if(!$category) return -1;
+
+		$category->delete();
+		return redirect()->route('categories');
+	}
+
 	public function getOrCreateCategory(string $name,int $parent_id = null){
 		$exist = $this->getCategoryByName($name,$parent_id);
 		if($exist) return $exist;
@@ -63,22 +124,28 @@ class CategoryController extends Controller {
 		return Category::all();
 	}
 
-	public function getListed(){
+	//if not formatted, is full category item
+	public function getListed($formatted = true){
 		$categories = Category::where('parent_id', null)->get();
-        $list = array();
-        foreach ($categories as $key => $category) {
-            $list = array_merge($list,$this->treeView($category));
-        }
-        return $list;
+		$list = array();
+		foreach ($categories as $key => $category) {
+			$list = array_merge($list,$this->treeView($category,$formatted));
+		}
+		return $list;
 	}
 
-	private function treeView($category, $prefix = ""){
+	private function treeView($category, $formatted, $prefix = ""){
 		$children = $category->children;
-		$disabled = (count($children) > 0)?true:false;
-		$list[] = ['id' => $category->id,'name' => $prefix.$category->name,'disabled' => $disabled];
+		if($formatted){
+			$disabled = (count($children) > 0)?true:false;
+			$list[] = ['id' => $category->id,'name' => $prefix.$category->name,'disabled' => $disabled];
+		}
+		else{
+			$list[] = $category;
+		}
 		if(count($children) > 0){
 			foreach ($children as $key => $child) {
-				$list = array_merge($list, $this->treeView($child,$prefix.($key+1).". "));
+				$list = array_merge($list, $this->treeView($child,$formatted,$prefix.($key+1).". "));
 			}
 		}
 		return $list;

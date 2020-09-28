@@ -34,4 +34,11 @@ Route::post('/variants', 'VariantController@store');
 Route::get('/variants/{id}/edit', 'VariantController@edit');
 Route::post('/variants/{id}', 'VariantController@update');
 
+Route::get('/categories', 'CategoryController@index')->name('categories');
+Route::get('/categories/create', 'CategoryController@create');
+Route::post('/categories', 'CategoryController@store');
+Route::get('/categories/{id}/edit', 'CategoryController@edit');
+Route::post('/categories/{id}', 'CategoryController@update');
+Route::get('/categories/{id}/delete', 'CategoryController@delete');
+
 Route::get('/corrector', 'MainController@corrector');

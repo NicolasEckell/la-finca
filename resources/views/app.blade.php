@@ -15,7 +15,7 @@
 
     <!-- css: DataTable library -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.22/datatables.min.css"/>
-{{--     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/b-1.5.6/b-colvis-1.5.6/b-html5-1.5.6/b-print-1.5.6/cr-1.5.0/r-2.2.2/datatables.min.css"/> --}}
+    {{--     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/b-1.5.6/b-colvis-1.5.6/b-html5-1.5.6/b-print-1.5.6/cr-1.5.0/r-2.2.2/datatables.min.css"/> --}}
     <!-- css:custom page -->
     @yield('css')
 </head>
@@ -46,6 +46,9 @@
                             </a>
                             <a class="badge badge-outline-success badge-button mr-5" href="/variants">
                                 Gestionar Variantes
+                            </a>
+                            <a class="badge badge-outline-success badge-button mr-5" href="/categories">
+                                Gestionar Categorias
                             </a>
                             <a class="badge badge-outline-primary badge-button mr-5" href="/products">
                                 Gestionar Productos
