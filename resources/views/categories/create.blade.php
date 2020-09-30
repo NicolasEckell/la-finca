@@ -21,11 +21,11 @@
 		@endforeach
 	</select>
 	<br>
-	<a class="btn btn-primary" type="submit">
+	<button class="btn btn-primary" type="submit">
 		<span style="color: white">
 			AGREGAR
 		</span>
-	</a>
+	</button>
 </form>
 
 @endsection

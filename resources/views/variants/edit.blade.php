@@ -19,11 +19,11 @@
 	<label>Valor {{ $i+1 }}</label>
 	<input required type="number" name="val_{{ $i }}" id="val_{{ $i }}" /><br>
 	@endfor
-	<a class="btn btn-primary" type="submit" onclick="return checkVar(event)">
+	<button class="btn btn-primary" type="submit" onclick="return checkVar(event)">
 		<span style="color: white">
 			GUARDAR
 		</span>
-	</a>
+	</button>
 </form>
 
 @endsection

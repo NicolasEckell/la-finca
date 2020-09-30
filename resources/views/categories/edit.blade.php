@@ -13,10 +13,10 @@
 	<label>Nombre de la categoría</label>
 	<input required type="text" name="name" id="name" value="{{ $category->name }}" />
 	<br>
-	<a class="btn btn-primary" type="submit">
+	<button class="btn btn-primary" type="submit">
 		<span style="color: white">
 		AGREGAR</span>
-	</a>
+	</button>
 	<input hidden name="id" id="id" value="{{ $category->id }}" />
 </form>
 
