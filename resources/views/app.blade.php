@@ -50,7 +50,7 @@
                             <a class="badge badge-outline-success badge-button mr-5" href="/categories">
                                 Gestionar Categorias
                             </a>
-                            <a class="badge badge-outline-primary badge-button mr-5" href="/products">
+                            <a class="badge badge-outline-success badge-button mr-5" href="/products">
                                 Gestionar Productos
                             </a>
                             <a class="badge badge-outline-primary badge-button mr-5" href="/export">

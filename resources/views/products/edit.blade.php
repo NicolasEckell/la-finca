@@ -72,7 +72,11 @@
 	</select>
 	<br>
 	
-	<button type="submit">GUARDAR</button>
+	<a class="btn btn-primary" type="submit">
+		<span style="color: white">
+			GUARDAR
+		</span>
+	</a>
 </form>
 
 @endsection

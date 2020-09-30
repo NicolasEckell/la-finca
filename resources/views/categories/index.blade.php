@@ -9,8 +9,8 @@
 		<div class="card">
 			<div class="card-header">
 				@include('flash::message')
-				<a class="badge badge-outline-info badge-button" href="/categories/create">
-					Nueva Categoria
+				<a class="badge badge-outline-primary badge-button" href="/categories/create">
+					Crear Nueva Categoria
 				</a>
 			</div>
 			<div class="card-body">
@@ -33,6 +33,9 @@
 								</td>
 								<th>{{ count($category->products) }}</th>
 								<td>
+									<a class="badge badge-outline-primary badge-button" href="/categories/{{ $category->id }}/products">
+										Ver productos
+									</a>									
 									<a class="badge badge-outline-info badge-button" href="/categories/{{ $category->id }}/edit">
 										Editar Categoria
 									</a>
@@ -54,13 +57,4 @@
 
 @section('script')
 <script src="{{ asset('js/data-table.js') }}"></script>
-<script type="text/javascript">
-	function doubleCheck(str){
-		var x = confirm(" "+ str +"?");
-		if (x)
-			return true;
-		else
-			return false;
-	}
-</script>
 @endsection

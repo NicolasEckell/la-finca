@@ -9,8 +9,8 @@
 	<div class="col-lg-12 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-header">
-				<a class="badge badge-outline-info badge-button" href="/variants/create">
-					Nueva Variante
+				<a class="badge badge-outline-primary badge-button" href="/variants/create">
+					Crear Nueva Variante
 				</a>
 			</div>
 			<div class="card-body">

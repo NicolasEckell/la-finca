@@ -23,6 +23,11 @@ class CategoryController extends Controller {
 		return view('categories.edit')->with('category',$category);
 	}
 
+	public function showProducts($id){
+		$category = $this->getById($id);
+		return view('categories.products')->with('category',$category);
+	}
+
 	public function store(Request $request){
 
 		if(!isset($request['parent_id']) || !isset($request['name']))
