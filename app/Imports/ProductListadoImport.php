@@ -37,7 +37,7 @@ class ProductListadoImport implements ToCollection, WithStartRow {
                 $exist->details = $product->details;
                 $exist->vendor = $product->vendor;
                 $exist->barcode = $product->barcode;
-                $exist->showOnStore = true;
+                $exist->showOnStore = $this->isValidProduct($exist);
                 $exist->save();
                 $N['update']++;
             }
@@ -48,6 +48,24 @@ class ProductListadoImport implements ToCollection, WithStartRow {
 
         $N['delete'] = $productController->getTurnedOff();
         $_SESSION['N'] = $N;
+    }
+
+    public function isValidProduct(Product $product){
+        $cat = $product->categories()->first();
+        if((int) $product->price <= 0){
+            return false;
+        }
+        if($cat){
+            if($cat->isRoot()){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        else{
+            return false;
+        }
     }
 
     public function startRow(): int{

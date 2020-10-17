@@ -29,7 +29,7 @@ class ProductStockImport implements ToCollection, WithStartRow {
                 'name'          => $row[1],
                 'categories'    => $row[2],
                 'stock'         => $row[5],
-                'showOnStore'   => true,
+                'showOnStore'   => false,
             ]);
             $code = $row[0];
             $exist = $productController->findProductByCode($code);
@@ -43,8 +43,8 @@ class ProductStockImport implements ToCollection, WithStartRow {
             else{
                 //Producto existente, ignorar la categoria, actualizar stock y nombre
                 $exist->name = $newProduct->name;
-                $exist->stock = $newProduct->stock;
-                $exist->showOnStore = true;
+                $exist->stock = $this->parseStock($newProduct);
+                $exist->showOnStore = $this->isValidProduct($exist);
                 $exist->save();
                 $N['update']++;
             }
@@ -52,6 +52,34 @@ class ProductStockImport implements ToCollection, WithStartRow {
 
         $N['delete'] = $productController->getTurnedOff();
         $_SESSION['N'] = $N;
+    }
+
+    public function parseStock(Product $product){
+        $stock = (int) $product->stock;
+        if($stock <= 0){
+            return 0;
+        }
+        else{
+            return $stock;
+        }
+    }
+
+    public function isValidProduct(Product $product){
+        $cat = $product->categories()->first();
+        if((int) $product->price <= 0){
+            return false;
+        }
+        if($cat){
+            if($cat->isRoot()){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        else{
+            return false;
+        }
     }
 
     public function startRow(): int{

@@ -68,7 +68,6 @@ class VariantController extends Controller {
 		return redirect()->route('variants');
 	}
 
-
 	public function getById(int $id){
 		return Variant::where('id',$id)->first();
 	}

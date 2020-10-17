@@ -25,7 +25,7 @@ class Category extends Model {
 	}
 
 	public function isRoot(){
-		if($this->parent_id == null)
+		if($this->parent_id == null && count($this->children()->get()) > 0)
 			return true;
 		else
 			return false;
