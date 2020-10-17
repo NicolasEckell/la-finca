@@ -33,7 +33,7 @@ class ProductListadoImport implements ToCollection, WithStartRow {
             $exist = $productController->findProductByCode($product->code);
             if($exist){
                 //Producto existente, actualizar precio, detalles, proveedor y codigo de barras
-                $exist->price = $product->price;
+                $exist->price = $this->formatPrice($product->price);
                 $exist->details = $product->details;
                 $exist->vendor = $product->vendor;
                 $exist->barcode = $product->barcode;
@@ -48,6 +48,18 @@ class ProductListadoImport implements ToCollection, WithStartRow {
 
         $N['delete'] = $productController->getTurnedOff();
         $_SESSION['N'] = $N;
+    }
+
+    public function formatPrice($price){
+        $pos = strpos($price, '$');
+        if (!$pos) return $price;
+        $price = substr($price, $pos + 1);
+
+        $pos = strpos($price, ',');
+        if (!$pos) return $price;
+        $price = substr($price, 0, $pos). "." . substr($price, $pos + 1);
+        
+        return (float) $price;
     }
 
     public function isValidProduct(Product $product){
