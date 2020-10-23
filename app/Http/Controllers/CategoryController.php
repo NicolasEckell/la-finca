@@ -75,8 +75,13 @@ class CategoryController extends Controller {
 			return redirect()->route('categories');
 		}
 		elseif(count($category->products) > 0){
-			Flash::error('No es posible eliminar una categoría que tenga productos asociados');
-			return redirect()->route('categories');
+			$n = count($category->products);
+			foreach ($category->products as $key => $product) {
+				$product->categories()->detach($category->id);
+				$product->showOnStore = false;
+				$product->save();
+			}
+			Flash::info('Categoría eliminada! Sin embargo, ' . $n .' productos quedaron sin una categoría asignada');
 		}
 		else{
 			Flash::success('Categoría eliminada!');
