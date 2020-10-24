@@ -51,7 +51,7 @@ class ProductController extends Controller {
 			$product->showOnStore = true;
 		}
 		else{
-			$product->showOnStore = false;	
+			$product->showOnStore = false;
 		}
 
 		$cat = $product->categories()->first();

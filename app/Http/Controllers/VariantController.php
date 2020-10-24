@@ -34,7 +34,7 @@ class VariantController extends Controller {
 			}
 		}
 
-		if(count($variants) < 2)
+		if(count($variants) < 1)
 			return -1;
 
 		$variant = new Variant();
@@ -59,7 +59,7 @@ class VariantController extends Controller {
 			}
 		}
 
-		if(count($variants) < 2)
+		if(count($variants) < 1)
 			return -1;
 
 		$variant->variants = json_encode($variants);

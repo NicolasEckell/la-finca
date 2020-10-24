@@ -16,7 +16,7 @@
 	@endfor
 	<button class="btn btn-primary" type="submit" onclick="return checkVar(event)">
 		<span style="color: white">
-			GUARDAR
+			AGREGAR
 		</span>
 	</button>
 </form>
