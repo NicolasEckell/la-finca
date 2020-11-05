@@ -188,8 +188,11 @@ class ExportController extends Controller {
 		return $this->seoUrl($name);
 	}
 
-	public function parseCategories(Category $child_cat): string {
-		return $child_cat->getParsed();
+	public function parseCategories($child_cat): string {
+		if($child_cat instanceOf Category)
+			return $child_cat->getParsed();
+		else
+			return "";
 	}
 
 	public function parseType($type){
