@@ -17,9 +17,9 @@
 	@endforeach
 	@for ($i = $key+1; $i < 10; $i++)
 	<label>Valor {{ $i+1 }}</label>
-	<input required type="number" name="val_{{ $i }}" id="val_{{ $i }}" /><br>
+	<input type="number" name="val_{{ $i }}" id="val_{{ $i }}" /><br>
 	@endfor
-	<button class="btn btn-primary" type="submit" onclick="return checkVar(event)">
+	<button class="btn btn-primary" type="submit" {{-- onclick="return checkVar(event)" --}}>
 		<span style="color: white">
 			GUARDAR
 		</span>
@@ -30,6 +30,6 @@
 
 @section('script')
 
-<script src="{{ asset('js/utils.js') }}"></script>
+{{-- <script src="{{ asset('js/utils.js') }}"></script> --}}
 
 @endsection
