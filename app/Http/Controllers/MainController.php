@@ -8,8 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Imports\ProductListadoImport;
 use App\Imports\ProductStockImport;
 
-use Excel;
-use Input;
+use Maatwebsite\Excel\Excel;
 use App;
 
 use League\Csv\Writer;
@@ -49,7 +48,7 @@ class MainController extends Controller {
 			abort(200,"Error!");
 		}
 	}
-	
+
 	public function corrector(){
 		App::make('App\Http\Controllers\ExportController')->corrector();
 		abort(200,"Todo OK!");

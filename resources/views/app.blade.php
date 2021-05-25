@@ -85,7 +85,6 @@
     function GoBackWithRefresh(event) {
         if ('referrer' in document) {
             window.location = document.referrer;
-            //or location.replace(document.referrer);
         } else {
             window.history.back();
         }
