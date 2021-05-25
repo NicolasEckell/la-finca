@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,9 +26,9 @@ Route::post('/importStock', 'MainController@importStock');
 
 Route::get('/exportar', 'MainController@exportar');
 
-Route::get('/products','ProductController@index')->name('products');
-Route::get('/products/{id}/edit','ProductController@edit');
-Route::post('/products/{id}','ProductController@update');
+Route::get('/products', 'ProductController@index')->name('products');
+Route::get('/products/{id}/edit', 'ProductController@edit');
+Route::post('/products/{id}', 'ProductController@update');
 
 Route::get('/variants', 'VariantController@index')->name('variants');
 Route::get('/variants/create', 'VariantController@create');
