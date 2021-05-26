@@ -1,0 +1,7 @@
+open ftpupload.net
+epiz_28687807
+GxzmGz4SO49AC
+cd htdocs
+put storage\app\Laravel\mysql-lafinca.sql
+disconnect
+quit
