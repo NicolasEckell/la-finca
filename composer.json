@@ -13,7 +13,9 @@
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^6.2",
-        "maatwebsite/excel": "^3.1"
+        "maatwebsite/excel": "^3.1",
+        "spatie/db-dumper": "^2.21",
+        "spatie/laravel-backup": "^6.16"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
