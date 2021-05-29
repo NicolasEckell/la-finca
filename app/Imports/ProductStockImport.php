@@ -3,19 +3,18 @@
 namespace App\Imports;
 
 use App\Product;
+use App\Services\ProductService;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithStartRow;
-use App;
 
 class ProductStockImport implements ToCollection, WithStartRow {
 
     public function collection(Collection $collection){
         // $data = $_SESSION['data'];
-        $productController = App::make('App\Http\Controllers\ProductController');
-        $categoryController = App::make('App\Http\Controllers\CategoryController');
-        
-        $productController->turnOffAll();
+        $productService = new ProductService;
+
+        $productService->turnOffAll();
 
         $N = [
             'new' => 0,
@@ -32,7 +31,7 @@ class ProductStockImport implements ToCollection, WithStartRow {
                 'showOnStore'   => false,
             ]);
             $code = $row[0];
-            $exist = $productController->findProductByCode($code);
+            $exist = $productService->findProductByCode($code);
             if(!$exist){
                 //Nuevo producto, agregar categoria
                 // $cat = $categoryController->createFromString($newProduct->categories);
@@ -44,13 +43,12 @@ class ProductStockImport implements ToCollection, WithStartRow {
                 //Producto existente, ignorar la categoria, actualizar stock y nombre
                 $exist->name = $newProduct->name;
                 $exist->stock = $this->parseStock($newProduct);
-                $exist->showOnStore = $this->isValidProduct($exist);
+                $exist->showOnStore = $productService->isValidProduct($exist);
                 $exist->save();
                 $N['update']++;
             }
         }
-
-        $N['delete'] = $productController->getTurnedOff();
+        $N['delete'] = $productService->getTurnedOff();
         $_SESSION['N'] = $N;
     }
 
@@ -61,24 +59,6 @@ class ProductStockImport implements ToCollection, WithStartRow {
         }
         else{
             return $stock;
-        }
-    }
-
-    public function isValidProduct(Product $product){
-        $cat = $product->categories()->first();
-        if((int) $product->price <= 0){
-            return false;
-        }
-        if($cat){
-            if($cat->isRoot()){
-                return false;
-            }
-            else{
-                return true;
-            }
-        }
-        else{
-            return false;
         }
     }
 

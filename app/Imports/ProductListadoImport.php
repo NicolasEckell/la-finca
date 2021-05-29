@@ -3,17 +3,17 @@
 namespace App\Imports;
 
 use App\Product;
+use App\Services\ProductService;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithStartRow;
-use App;
 
 class ProductListadoImport implements ToCollection, WithStartRow {
 
     public function collection(Collection $collection){
-        $productController = App::make('App\Http\Controllers\ProductController');
+        $productService = new ProductService;
 
-        $productController->turnOffAll();
+        $productService->turnOffAll();
 
         $N = [
             'new' => 0,
@@ -30,14 +30,14 @@ class ProductListadoImport implements ToCollection, WithStartRow {
                 'vendor'        => $row[19],
                 'barcode'       => $row[21]
             ]);
-            $exist = $productController->findProductByCode($product->code);
+            $exist = $productService->findProductByCode($product->code);
             if($exist){
                 //Producto existente, actualizar precio, detalles, proveedor y codigo de barras
                 $exist->price = $this->formatPrice($product->price);
                 $exist->details = $product->details;
                 $exist->vendor = $product->vendor;
                 $exist->barcode = $product->barcode;
-                $exist->showOnStore = $this->isValidProduct($exist);
+                $exist->showOnStore = $productService->isValidProduct($exist);
                 $exist->save();
                 $N['update']++;
             }
@@ -46,7 +46,7 @@ class ProductListadoImport implements ToCollection, WithStartRow {
             }
         }
 
-        $N['delete'] = $productController->getTurnedOff();
+        $N['delete'] = $productService->getTurnedOff();
         $_SESSION['N'] = $N;
     }
 
@@ -58,26 +58,8 @@ class ProductListadoImport implements ToCollection, WithStartRow {
         $pos = strpos($price, ',');
         if (!$pos) return $price;
         $price = substr($price, 0, $pos). "." . substr($price, $pos + 1);
-        
-        return (float) $price;
-    }
 
-    public function isValidProduct(Product $product){
-        $cat = $product->categories()->first();
-        if((int) $product->price <= 0){
-            return false;
-        }
-        if($cat){
-            if($cat->isRoot()){
-                return false;
-            }
-            else{
-                return true;
-            }
-        }
-        else{
-            return false;
-        }
+        return (float) $price;
     }
 
     public function startRow(): int{

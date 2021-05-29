@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Services\ExportService;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -14,7 +15,7 @@ class ProductExport implements FromArray, WithHeadings
 
     public function array(): array
     {
-        return app()->make('App\Http\Controllers\ExportController')->exportProducts();
+        return (new ExportService)->exportProducts();
     }
 
     public function headings(): array

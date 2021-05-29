@@ -1,11 +1,12 @@
 <?php
-namespace App\Http\Controllers;
-use App\Http\Controllers\Controller;
+
+namespace App\Services;
 
 use App\Category;
 use App\Product;
+use VariantService;
 
-class CorrectorController extends Controller {
+class CorrectorService {
 
 	public function getProducts(){
 		return app()->make('App\Http\Controllers\ProductController')->getAll();
@@ -96,7 +97,7 @@ class CorrectorController extends Controller {
 				$product->type = "Peso";
 				$product->save();
 
-				$COREvariants = app()->make('\App\Http\Controllers\VariantController')->getAll();
+				$COREvariants = (new VariantService)->getAll();
 				for ($j=0; $j < count($COREvariants); $j++) {
 					$CORE = json_decode($COREvariants[$j]->variants);
 					for ($k=0; $k < count($CORE); $k++) {

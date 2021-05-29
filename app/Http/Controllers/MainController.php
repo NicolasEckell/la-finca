@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use Excel;
 use App\Imports\ProductListadoImport;
 use App\Imports\ProductStockImport;
 use App\Exports\ProductExport;
+use App\Services\CorrectorService;
 
 class MainController extends Controller {
 
@@ -18,8 +18,8 @@ class MainController extends Controller {
 		$file_input = request()->file('listado');
 
 		if($file_input){
-			$_SESSION['data'] = [];
-			Excel::toArray(new ProductListadoImport, $file_input);
+			$_SESSION['N'] = [];
+			Excel::import(new ProductListadoImport, $file_input);
 			$N = $_SESSION['N'];
 			abort(200,$N['new']." Productos Nuevos (pero no fueron creados, deben ser ingresados primero desde el archivo de Stock). ".$N['update']." Productos Actualizados. ".$N['delete']." Productos detectados Fuera de la Tienda");
 		}
@@ -47,7 +47,7 @@ class MainController extends Controller {
     }
 
 	public function corrector(){
-		app()->make('App\Http\Controllers\CorrectorController')->corrector();
+		(new CorrectorService())->corrector();
 		abort(200,"Todo OK!");
 	}
 

@@ -1,17 +1,14 @@
 <?php
-namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+
+namespace App\Services;
 
 use App\Category;
 use App\Product;
 
-use App;
-
-class ExportController extends Controller {
+class ExportService {
 
 	public function getProducts(){
-		return app()->make('App\Http\Controllers\ProductController')->getAll();
+		return (new ProductService)->getAll();
 	}
 
 	public function getPriceOfVariant(float $variant, float $pricePerKilo){
