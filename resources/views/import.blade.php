@@ -1,4 +1,4 @@
-<div class="d-flex align-items-start mt-3 flex-row">
+<div class="d-flex align-items-start mt-3">
     <div class="mt-3 col-sm-6">
         <div class="card">
             <div class="card-header">Paso 1: Carga del archivo "Productos Stock"</div>

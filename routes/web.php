@@ -45,11 +45,3 @@ Route::get('/categories/{id}/delete', 'CategoryController@delete');
 Route::get('/categories/{id}/products', 'CategoryController@showProducts');
 
 Route::get('/corrector', 'MainController@corrector');
-
-Route::get('/test', function(){
-    Spatie\DbDumper\Databases\MySql::create()
-    ->setDbName(env('DB_DATABASE'))
-    ->setUserName(env('DB_USERNAME'))
-    ->setPassword(env('DB_PASSWORD'))
-    ->dumpToFile('dump.sql');
-});
