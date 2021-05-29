@@ -29,7 +29,7 @@ class CategoryController extends Controller
         return view('categories.edit')->with('category', $category);
     }
 
-    public function showProducts($id)
+    public function getProductss($id)
     {
         $category = $this->getById($id);
         return view('categories.products')->with('category', $category);

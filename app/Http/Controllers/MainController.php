@@ -47,7 +47,7 @@ class MainController extends Controller {
     }
 
 	public function corrector(){
-		app()->make('App\Http\Controllers\ExportController')->corrector();
+		app()->make('App\Http\Controllers\CorrectorController')->corrector();
 		abort(200,"Todo OK!");
 	}
 
