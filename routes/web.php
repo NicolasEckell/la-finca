@@ -23,25 +23,24 @@ Route::get('/export', function () {
 
 Route::post('/importListado', 'MainController@importListado');
 Route::post('/importStock', 'MainController@importStock');
-
 Route::get('/exportar', 'MainController@exportar');
 
 Route::get('/products', 'ProductController@index')->name('products');
-Route::get('/products/{id}/edit', 'ProductController@edit');
+Route::get('/products/{id}', 'ProductController@edit');
 Route::post('/products/{id}', 'ProductController@update');
 
-Route::get('/variants', 'VariantController@index')->name('variants');
 Route::get('/variants/create', 'VariantController@create');
+Route::get('/variants', 'VariantController@index')->name('variants');
 Route::post('/variants', 'VariantController@store');
-Route::get('/variants/{id}/edit', 'VariantController@edit');
+Route::get('/variants/{id}', 'VariantController@edit');
 Route::post('/variants/{id}', 'VariantController@update');
 
-Route::get('/categories', 'CategoryController@index')->name('categories');
 Route::get('/categories/create', 'CategoryController@create');
+Route::get('/categories', 'CategoryController@index')->name('categories');
 Route::post('/categories', 'CategoryController@store');
-Route::get('/categories/{id}/edit', 'CategoryController@edit');
+Route::get('/categories/{id}', 'CategoryController@edit');
 Route::post('/categories/{id}', 'CategoryController@update');
 Route::get('/categories/{id}/delete', 'CategoryController@delete');
-Route::get('/categories/{id}/products', 'CategoryController@showProducts');
+Route::get('/categories/{id}/products', 'CategoryController@getProducts');
 
 Route::get('/corrector', 'MainController@corrector');

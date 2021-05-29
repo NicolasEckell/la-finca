@@ -29,7 +29,7 @@
 								<td>{{ $variant->id }}</td>
 								<td>{{ $variant->variants }}</td>
 								<td>
-									<a class="badge badge-outline-info badge-button" href="/variants/{{ $variant->id }}/edit">
+									<a class="badge badge-outline-info badge-button" href="/variants/{{ $variant->id }}">
 										Editar Variante
 									</a>
 								</td>
