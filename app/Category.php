@@ -9,7 +9,7 @@ class Category extends Model {
 	protected $table = 'categories';
 
 	protected $fillable = [
-		'name'
+		'name','parent_id'
 	];
 
 	public function parent(){
@@ -44,17 +44,17 @@ class Category extends Model {
 	public function getFormatted(){
 		$parent = $this->parent();
 		if($parent){
-			return $parent->getParsed().', '.$this->name;
+			return $parent->export().', '.$this->name;
 		}
 		else{
 			return $this->name;
 		}
 	}
 
-	public function getParsed(){
+	public function export(){
 		$parent = $this->parent();
 		if($parent){
-			return $parent->getParsed().' > '.$this->name;
+			return $parent->export().' > '.$this->name;
 		}
 		else{
 			return $this->name;

@@ -17,7 +17,7 @@
 	<select name="parent_id">
 		<option value="0" selected>Nueva Categoría Raíz</option>
 		@foreach($categories as $key => $category)
-		<option value="{{ $category->id }}">{{$category->getFormatted() }}</option>
+		<option value="{!! $category->id !!}">{!!$category->getFormatted() !!}</option>
 		@endforeach
 	</select>
 	<br>
