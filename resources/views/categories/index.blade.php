@@ -27,19 +27,19 @@
 						<tbody>
 							@foreach($categories as $key => $category)
 							<tr>
-								<td>{{ $key+1 }}</td>
-								<td style="{{ ($category->parent_id == null)?'background-color: darkorange':''}}">
-									{{ $category->getFormatted() }}
+								<td>{!! $key+1 !!}</td>
+								<td style="{!! ($category->parent_id == null)?'background-color: darkorange':''!!}">
+									{!! $category->getFormatted() !!}
 								</td>
-								<th>{{ count($category->products) }}</th>
+								<th>{!! count($category->products) !!}</th>
 								<td>
-									<a class="badge badge-outline-primary badge-button" href="/categories/{{ $category->id }}/products">
+									<a class="badge badge-outline-primary badge-button" href="/categories/{!! $category->id !!}/products">
 										Ver productos
 									</a>
-									<a class="badge badge-outline-info badge-button" href="/categories/{{ $category->id }}">
+									<a class="badge badge-outline-info badge-button" href="/categories/{!! $category->id !!}">
 										Editar Categoria
 									</a>
-									<a class="badge badge-outline-danger badge-button" onclick="return confirm('{{'Desea eliminar la categoría '.$category->getFormatted().'?' }}')" href="/categories/{{ $category->id }}/delete">
+									<a class="badge badge-outline-danger badge-button" onclick="return confirm('{!!'Desea eliminar la categoría '.$category->getFormatted().'?' !!}')" href="/categories/{!! $category->id !!}/delete">
 										Eliminar Categoria
 									</a>
 								</td>
@@ -56,5 +56,5 @@
 @endsection
 
 @section('script')
-<script src="{{ asset('js/data-table.js') }}"></script>
+<script src="{!! asset('js/data-table.js') !!}"></script>
 @endsection

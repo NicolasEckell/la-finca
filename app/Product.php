@@ -64,12 +64,24 @@ class Product extends Model {
         return "";
     }
 
+    public function showCategories(){
+        $cats = $this->categories()->get();
+        $result = "";
+		foreach($cats as $cat){
+            if($result !== ""){
+                $result .= "<br> ";
+            }
+            $result .= $cat->export();
+        }
+        return $result;
+    }
+
     public function exportCategories(){
         $cats = $this->categories()->get();
         $result = "";
 		foreach($cats as $cat){
             if($result !== ""){
-                $result += ", ";
+                $result .= ", ";
             }
             $result .= $cat->export();
         }

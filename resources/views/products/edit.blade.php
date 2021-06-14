@@ -16,7 +16,7 @@
 
 @section('content')
 
-    <h4 class="mt-3">Edición de producto con CÓDIGO INTERNO {{ $product->code }}</h4><br>
+    <h4 class="mt-3">Edición de producto con CÓDIGO INTERNO {!! $product->code !!}</h4><br>
 
     <div class="row justify-content-center mt-3">
         <div class="col-lg-12 grid-margin stretch-card">
@@ -40,16 +40,16 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{ $product->code }}</td>
-                                    <td>{{ $product->name }}</td>
-                                    <td>{{ $product->exportCategories() }}</td>
-                                    <td>{{ $product->getVariant() }}</td>
-                                    <td>{{ $product->type }}</td>
-                                    <td>{{ $product->stock }}</td>
-                                    <td>${{ $product->price }}</td>
-                                    <td>{{ $product->showOnStore ? 'SI' : 'NO' }}</td>
-                                    <td class="td-max-30">{{ $product->details }}</td>
-                                    <td class="td-max-20">{{ $product->vendor }}</td>
+                                    <td>{!! $product->code !!}</td>
+                                    <td>{!! $product->name !!}</td>
+                                    <td>{!! $product->showCategories() !!}</td>
+                                    <td>{!! $product->getVariant() !!}</td>
+                                    <td>{!! $product->type !!}</td>
+                                    <td>{!! $product->stock !!}</td>
+                                    <td>${!! $product->price !!}</td>
+                                    <td>{!! $product->showOnStore ? 'SI' : 'NO' !!}</td>
+                                    <td class="td-max-30">{!! $product->details !!}</td>
+                                    <td class="td-max-20">{!! $product->vendor !!}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -59,12 +59,12 @@
         </div>
     </div>
 
-    <form method="POST" action="/products/{{ $product->id }}" id="products" class="mt-3">
+    <form method="POST" action="/products/{!! $product->id !!}" id="products" class="mt-3">
         @csrf
         <label>Mostrar en Tienda</label>
-        <input type="checkbox" name="showOnStore" id="showOnStore" {{ $product->showOnStore ? 'checked' : '' }} />
+        <input type="checkbox" name="showOnStore" id="showOnStore" {!! $product->showOnStore ? 'checked' : '' !!} />
 
-        <input hidden name="id" id="id" value="{{ $product->id }}" /><br>
+        <input hidden name="id" id="id" value="{!! $product->id !!}" /><br>
         <h5>Seleccione la variante y las categorías para el presente producto</h5><br>
 
         <div class="container">
@@ -74,9 +74,9 @@
                     <select name="variant_id">
                         <option value="0" selected>Sin Variantes</option>
                         @foreach ($variants as $key => $variant)
-                            <option value="{{ $variant->id }}"
-                                {{ $product->variant_id != null && $variant->id == $product->variant_id ? 'selected' : '' }}>
-                                {{ 'ID ' . $variant->id }}{{ ': ' . $variant->variants }}</option>
+                            <option value="{!! $variant->id !!}"
+                                {!! $product->variant_id != null && $variant->id == $product->variant_id ? 'selected' : '' !!}>
+                                {!! 'ID ' . $variant->id !!}{!! ': ' . $variant->variants !!}</option>
                         @endforeach
                     </select>
                 </div>
@@ -85,17 +85,17 @@
                     <div id="categories">
                         @for ($i = 0; $i < 5; $i++)
                             <div class="row justify-content-between"
-                                id={{"category_id_" . $i}}
-                                style="{{$i < $product->categories()->count() ? 'display: block':'display:none'}}">
-                                <select name={{"category_id_" . $i}}>
+                                id={!!"category_id_" . $i!!}
+                                style="{!!$i < $product->categories()->count() ? 'display: block':'display:none'!!}">
+                                <select name={!!"category_id_" . $i!!}>
                                     @foreach ($categories as $key => $category)
-                                        <option value="{{ $category['id'] }}"
-                                            {{ $product->hasCategory($i, $category['id']) ? 'selected' : '' }}
-                                            {{ $category['disabled'] === true ? 'disabled' : '' }}>{{ $category['name'] }}
+                                        <option value="{!! $category['id'] !!}"
+                                            {!! $product->hasCategory($i, $category['id']) ? 'selected' : '' !!}
+                                            {!! $category['disabled'] === true ? 'disabled' : '' !!}>{!! $category['name'] !!}
                                         </option>
                                     @endforeach
                                 </select>
-                                <a class="btn btn-danger ml-3" onclick="deleteCategory({{'category_id_' . $i}})">
+                                <a class="btn btn-danger ml-3" onclick="deleteCategory({!!'category_id_' . $i!!})">
                                     <span style="color: white">
                                         - Borrar
                                     </span>
@@ -124,22 +124,7 @@
 @endsection
 
 @section('script')
-    {{-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> --}}
     <script>
-        // var categories = [];
-        // axios.get('/categories/data')
-        // .then(function (response) {
-        //     getCategories(response.data);
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // })
-        // .then(function () {
-        // });
-
-        // function getCategories(data){
-        //     categories = data;
-        // }
         var count = 0;
         function addCategory() {
             count++;

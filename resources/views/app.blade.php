@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{!! app()->getLocale() !!}">
 
 <head>
     <!-- Required meta tags -->

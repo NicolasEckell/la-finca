@@ -26,10 +26,10 @@
 						<tbody>
 							@foreach($variants as $variant)
 							<tr>
-								<td>{{ $variant->id }}</td>
-								<td>{{ $variant->variants }}</td>
+								<td>{!! $variant->id !!}</td>
+								<td>{!! $variant->variants !!}</td>
 								<td>
-									<a class="badge badge-outline-info badge-button" href="/variants/{{ $variant->id }}">
+									<a class="badge badge-outline-info badge-button" href="/variants/{!! $variant->id !!}">
 										Editar Variante
 									</a>
 								</td>

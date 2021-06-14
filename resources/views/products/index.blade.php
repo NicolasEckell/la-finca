@@ -30,20 +30,20 @@
 							@foreach($products as $product)
 							<tr>
 								<td>
-									<a class="badge badge-outline-info badge-button" href="/products/{{ $product->id }}">
+									<a class="badge badge-outline-info badge-button" href="/products/{!! $product->id !!}">
 										Editar Producto
 									</a>
 								</td>
-								<td>{{ $product->code }}</td>
-								<td>{{ $product->name }}</td>
-								<td>{{ $product->exportCategories() }}</td>
-								<td>{{ $product->getVariant() }}</td>
-								<td>{{ $product->type }}</td>
-								<td>{{ $product->stock }}</td>
-								<td>${{ $product->price }}</td>
-								<td>{{ $product->showOnStore?'SI':'NO' }}</td>
-								<td class="td-max-30">{{ $product->details }}</td>
-								<td class="td-max-20">{{ $product->vendor }}</td>
+								<td>{!! $product->code !!}</td>
+								<td>{!! $product->name !!}</td>
+								<td>{!! $product->showCategories() !!}</td>
+								<td>{!! $product->getVariant() !!}</td>
+								<td>{!! $product->type !!}</td>
+								<td>{!! $product->stock !!}</td>
+								<td>${!! $product->price !!}</td>
+								<td>{!! $product->showOnStore?'SI':'NO' !!}</td>
+								<td class="td-max-30">{!! $product->details !!}</td>
+								<td class="td-max-20">{!! $product->vendor !!}</td>
 							</tr>
 							@endforeach
 						</tbody>
@@ -58,6 +58,6 @@
 
 @section('script')
 
-<script src="{{ asset('js/data-table.js') }}"></script>
+<script src="{!! asset('js/data-table.js') !!}"></script>
 
 @endsection
