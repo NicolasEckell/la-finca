@@ -16,6 +16,11 @@
     <!-- css: DataTable library -->
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.22/datatables.min.css" />
+        <style>
+            a:hover{
+                text-decoration: none;
+            }
+        </style>
     @yield('css')
 </head>
 

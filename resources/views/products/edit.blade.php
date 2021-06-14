@@ -128,7 +128,7 @@
 
 @section('script')
     <script>
-        var count = 0;
+        var count = {!! $product->categories()->count() - 1 !!};
         function addCategory() {
             count++;
             if(count > 4) count = 4;

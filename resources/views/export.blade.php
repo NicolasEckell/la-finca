@@ -5,8 +5,10 @@
 
 @section('content')
 
-<div class='btn btn-success mt-5'>
-	<a href="exportar">GENERAR CSV PARA TIENDANUBE</a>
+<div class="row justify-content-center">
+    <div class='btn btn-warning mt-5'>
+        <a style="color: black" href="exportar">GENERAR CSV PARA TIENDANUBE</a>
+    </div>
 </div>
 
 @endsection
