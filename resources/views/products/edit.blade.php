@@ -2,8 +2,11 @@
 
 @section('css')
     <style>
+        input[type=checkbox]{
+            margin-right: 5px;
+        }
         label {
-            display: block;
+            margin-bottom: 0px;
         }
 
         select {
@@ -59,18 +62,18 @@
         </div>
     </div>
 
-    <form method="POST" action="/products/{!! $product->id !!}" id="products" class="mt-3">
+    <form method="POST" action="/products/{!! $product->id !!}" id="products">
         @csrf
-        <label>Mostrar en Tienda</label>
-        <input type="checkbox" name="showOnStore" id="showOnStore" {!! $product->showOnStore ? 'checked' : '' !!} />
-
         <input hidden name="id" id="id" value="{!! $product->id !!}" /><br>
-        <h5>Seleccione la variante y las categorías para el presente producto</h5><br>
-
         <div class="container">
+            <div class="row justify-content-start align-items-center mb-3">
+                <input type="checkbox" name="showOnStore" id="showOnStore" {!! $product->showOnStore ? 'checked' : '' !!} />
+                <label for="showOnStore">Mostrar en Tienda</label>
+            </div>
+
             <div class="row justify-content-between align-items-start">
                 <div class="col-md-6">
-                    <label>Variante</label>
+                    <label for="variant_id">Variante</label>
                     <select name="variant_id">
                         <option value="0" selected>Sin Variantes</option>
                         @foreach ($variants as $key => $variant)
@@ -81,12 +84,12 @@
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label>Categorías</label>
+                    <label for="categories">Categorías</label>
                     <div id="categories">
                         @for ($i = 0; $i < 5; $i++)
-                            <div class="row justify-content-between"
+                            <div class="d-flex justify-content-between mt-2"
                                 id={!!"category_id_" . $i!!}
-                                style="{!!$i < $product->categories()->count() ? 'display: block':'display:none'!!}">
+                                style="{!! $i < $product->categories()->count() ? 'display: flex !important':'display:none !important'!!}">
                                 <select name={!!"category_id_" . $i!!}>
                                     @foreach ($categories as $key => $category)
                                         <option value="{!! $category['id'] !!}"
