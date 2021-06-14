@@ -10,7 +10,6 @@ use Laracasts\Flash\Flash;
 
 class CategoryController extends Controller
 {
-
     public function index()
     {
         $categories = (new CategoryService)->getListed(false);

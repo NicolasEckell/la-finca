@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Product;
+use Illuminate\Database\Eloquent\Collection;
 
 class ProductService{
 
@@ -14,7 +15,7 @@ class ProductService{
 		return Product::where('code',$code)->first();
 	}
 
-	public function getAll(){
+	public function getAll(): Collection{
 		return Product::all();
 	}
 

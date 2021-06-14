@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Category;
 use App\Product;
+use Illuminate\Database\Eloquent\Collection;
 
 class ExportService {
 
-	public function getProducts(){
+	public function getProducts(): Collection{
 		return (new ProductService)->getAll();
 	}
 
@@ -48,7 +48,7 @@ class ExportService {
 		$item = [];
 		$item[0] = $this->parseUrl($product->code);
 		$item[1] = $product->name;
-		$item[2] = $this->parseCategories($product->categories()->first());
+		$item[2] = $this->parseCategories($product);
 		$item[3] = $this->parseType($product->type);
 		$item[4] = $this->parseWeight($weight);
 		$item[5] = "";
@@ -84,11 +84,8 @@ class ExportService {
 		return $this->seoUrl($name);
 	}
 
-	public function parseCategories($child_cat): string {
-		if($child_cat instanceOf Category)
-			return $child_cat->getParsed();
-		else
-			return "";
+	public function parseCategories(Product $product): string {
+        return $product->exportCategories();
 	}
 
 	public function parseType($type){

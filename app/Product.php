@@ -16,7 +16,7 @@ class Product extends Model {
     	return $this->belongsToMany('App\Category','products_categories','product_id','category_id')->withTimestamps();
     }
 
-    public function addCategory($cat){
+    public function addCategory(Category $cat){
     	$val = $this->categories()->get()->where('id',$cat->id)->first();
     	if(!$val){
     		$this->categories()->attach($cat);
@@ -25,9 +25,20 @@ class Product extends Model {
         $this->fixCategories($val);
     }
 
-    public function fixCategories(\App\Category $cat){
+    public function fixCategories(Category $cat){
         $this->categories = $cat->getFormatted();
         $this->save();
+    }
+
+    public function hasCategory(int $pos, int $id = null){
+        $result = false;
+        $cats = $this->categories()->get();
+        if($cats->count() > 0 && $pos >= 0 && $pos < $cats->count()){
+            if($cats[$pos]->id == $id){
+                $result = true;
+            }
+        }
+        return $result;
     }
 
     public function purge(){
@@ -53,12 +64,16 @@ class Product extends Model {
         return "";
     }
 
-    public function getCategory(){
-        $cat = $this->categories()->first();
-        if($cat){
-            return $cat->getFormatted();
+    public function exportCategories(){
+        $cats = $this->categories()->get();
+        $result = "";
+		foreach($cats as $cat){
+            if($result !== ""){
+                $result += ", ";
+            }
+            $result .= $cat->export();
         }
-        return "";
+        return $result;
     }
 
 }

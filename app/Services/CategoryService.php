@@ -71,7 +71,7 @@ class CategoryService{
     public function getListed($formatted = true)
     {
         $categories = Category::where('parent_id', null)->get();
-        $list = array();
+        $list = array(['id' => null, 'name' => 'Seleccione un valor...', 'disabled' => false]);
         foreach ($categories as $key => $category) {
             $list = array_merge($list, $this->treeView($category, $formatted));
         }

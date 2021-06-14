@@ -36,7 +36,7 @@
 								</td>
 								<td>{{ $product->code }}</td>
 								<td>{{ $product->name }}</td>
-								<td>{{ $product->getCategory() }}</td>
+								<td>{{ $product->exportCategories() }}</td>
 								<td>{{ $product->getVariant() }}</td>
 								<td>{{ $product->type }}</td>
 								<td>{{ $product->stock }}</td>
