@@ -29,24 +29,24 @@
         <div class="content-wrapper">
             <div class="container-fluid">
                 <div class="d-flex justify-content-start mt-1">
-                    <span class="badge badge-outline-success badge-button">
+                    <span class="btn btn-outline-success badge-button">
                         Importador La Finca
                     </span>
                 </div>
                 <div class="d-flex justify-content-center mt-3">
-                    <a class="badge badge-outline-primary badge-button mr-5" href="/">
+                    <a class="btn btn-outline-primary badge-button mr-5" href="/">
                         Importación
                     </a>
-                    <a class="badge badge-outline-success badge-button mr-5" href="/variants">
+                    <a class="btn btn-outline-success badge-button mr-5" href="/variants">
                         Gestionar Variantes
                     </a>
-                    <a class="badge badge-outline-success badge-button mr-5" href="/categories">
+                    <a class="btn btn-outline-success badge-button mr-5" href="/categories">
                         Gestionar Categorias
                     </a>
-                    <a class="badge badge-outline-success badge-button mr-5" href="/products">
+                    <a class="btn btn-outline-success badge-button mr-5" href="/products">
                         Gestionar Productos
                     </a>
-                    <a class="badge badge-outline-primary badge-button mr-5" href="/export">
+                    <a class="btn btn-outline-primary badge-button mr-5" href="/export">
                         Exportación
                     </a>
                 </div>

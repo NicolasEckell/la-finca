@@ -26,14 +26,14 @@
                     <div class="row justify-content-center align-items-center mt-1">
                         <label>Valor {!! $key + 1 !!}</label>
                         <input type="number" name="val_{!! $key !!}" id="val_{!! $key !!}"
-                            value="{!! $value !!}" {!! ($key == 0 || $key == 1)?'required':'' !!}/>
+                            value="{!! $value !!}" {!! ($key == 0 || $key == 1) ? 'required' : '' !!} />
                     </div>
                 @endforeach
                 @for ($i = $key + 1; $i < 10; $i++)
                     <div class="row justify-content-center align-items-center mt-1">
                         <label>Valor {!! $i + 1 !!}</label>
                         <input type="number" name="val_{!! $i !!}" id="val_{!! $i !!}"
-                        {!! ($i == 0 || $i == 1)?'required':'' !!} />
+                            {!! $i == 0 || $i == 1 ? 'required' : '' !!} />
                     </div>
                 @endfor
             </div>

@@ -30,7 +30,7 @@
 							@foreach($products as $product)
 							<tr>
 								<td>
-									<a class="badge badge-outline-info badge-button" href="/products/{!! $product->id !!}">
+									<a class="btn btn-outline-info badge-button" href="/products/{!! $product->id !!}">
 										Editar Producto
 									</a>
 								</td>

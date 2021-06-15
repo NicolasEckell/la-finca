@@ -10,7 +10,7 @@
 			<div class="card-header">
 				@include('flash::message')
 				Productos asociados a la Categoría
-				<a class="badge badge-outline-info badge-button" href="/categories/create">
+				<a class="badge badge-info badge-button" style="color: white">
 					{!! $category->getFormatted() !!}
 				</a>
 			</div>
@@ -36,7 +36,7 @@
 							@foreach($category->products as $key => $product)
 							<tr>
 								<td>
-									<a class="badge badge-outline-info badge-button" href="/products/{!! $product->id !!}">
+									<a class="btn btn-outline-info badge-button" href="/products/{!! $product->id !!}">
 										Editar Producto
 									</a>
 								</td>

@@ -9,7 +9,7 @@
 		<div class="card">
 			<div class="card-header">
 				@include('flash::message')
-				<a class="badge badge-outline-primary badge-button" href="/categories/create">
+				<a class="btn btn-outline-primary badge-button" href="/categories/create">
 					Crear Nueva Categoria
 				</a>
 			</div>
@@ -33,13 +33,13 @@
 								</td>
 								<th>{!! count($category->products) !!}</th>
 								<td>
-									<a class="badge badge-outline-primary badge-button" href="/categories/{!! $category->id !!}/products">
+									<a class="btn btn-outline-primary badge-button" href="/categories/{!! $category->id !!}/products">
 										Ver productos
 									</a>
-									<a class="badge badge-outline-info badge-button" href="/categories/{!! $category->id !!}">
+									<a class="btn btn-outline-info badge-button" href="/categories/{!! $category->id !!}">
 										Editar Categoria
 									</a>
-									<a class="badge badge-outline-danger badge-button" onclick="return confirm('{!!'Desea eliminar la categoría '.$category->getFormatted().'?' !!}')" href="/categories/{!! $category->id !!}/delete">
+									<a class="btn btn-outline-danger badge-button" onclick="return confirm('{!!'Desea eliminar la categoría '.$category->getFormatted().'?' !!}')" href="/categories/{!! $category->id !!}/delete">
 										Eliminar Categoria
 									</a>
 								</td>
