@@ -34,6 +34,7 @@ Route::get('/variants', 'VariantController@index')->name('variants');
 Route::post('/variants', 'VariantController@store');
 Route::get('/variants/{id}', 'VariantController@edit');
 Route::post('/variants/{id}', 'VariantController@update');
+Route::get('/variants/{id}/delete', 'VariantController@delete');
 
 Route::get('/categories/create', 'CategoryController@create');
 Route::get('/categories', 'CategoryController@index')->name('categories');

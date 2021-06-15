@@ -5,10 +5,12 @@
 
 @section('content')
 
+
 <div class="row justify-content-center mt-3">
 	<div class="col-lg-12 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-header">
+                @include('flash::message')
 				<a class="badge badge-outline-primary badge-button" href="/variants/create">
 					Crear Nueva Variante
 				</a>
@@ -20,6 +22,7 @@
 							<tr>
 								<th>ID</th>
 								<th>Variantes</th>
+                                <th>Productos asociados</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
@@ -28,9 +31,13 @@
 							<tr>
 								<td>{!! $variant->id !!}</td>
 								<td>{!! $variant->variants !!}</td>
+                                <td>{!! count($variant->products()) !!}</td>
 								<td>
-									<a class="badge badge-outline-info badge-button" href="/variants/{!! $variant->id !!}">
+									<a class="btn btn-outline-info" href="/variants/{!! $variant->id !!}">
 										Editar Variante
+									</a>
+                                    <a class="btn btn-outline-danger" href="/variants/{!! $variant->id . '/delete' !!}">
+										Borrar Variante
 									</a>
 								</td>
 							</tr>

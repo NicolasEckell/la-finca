@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\VariantService;
 use App\Models\Variant;
+use Laracasts\Flash\Flash;
 
 class VariantController extends Controller {
 
@@ -69,5 +70,22 @@ class VariantController extends Controller {
 
 		return redirect()->route('variants');
 	}
+
+    public function delete($id)
+    {
+        $variant = (new VariantService)->getById($id);
+        if (!$variant) return -1;
+
+        if (count($variant->products()) > 0) {
+            Flash::error('No es posible eliminar una variante que contenga productos asociados');
+            return redirect()->route('variants');
+        }
+        else {
+            Flash::success('Variante eliminada!');
+        }
+
+        $variant->delete();
+        return redirect()->route('variants');
+    }
 
 }

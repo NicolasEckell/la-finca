@@ -65,7 +65,7 @@
 <script>
     //Overlays, modals config
     $(document).ready(function() {
-        $('div.alert:not(.static)').delay(2500).slideUp("slow");
+        $('div.alert:not(.static)').delay(4000).slideUp("slow");
     });
     //GoBack Button config
     function GoBackWithRefresh(event) {

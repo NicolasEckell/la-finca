@@ -13,7 +13,7 @@
 @section('content')
 
     <h4 class="mt-3">Editar la variante ID {!! $variant->id !!}</h4>
-    <form method="POST" action="/variants" id="variants">
+    <form method="POST" action="/variants/{!! $variant->id !!}}" id="variants">
         @csrf
         <input hidden name="id" id="id" value="{!! $variant->id !!}" />
         <h5>
