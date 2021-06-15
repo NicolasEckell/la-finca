@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Category;
-use App\Product;
+use App\Models\Category;
+use App\Models\Product;
 use VariantService;
 
 class CorrectorService {

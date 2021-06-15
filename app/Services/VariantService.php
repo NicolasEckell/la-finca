@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Variant;
+use App\Models\Variant;
 
 class VariantService{
 

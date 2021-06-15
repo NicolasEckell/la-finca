@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,15 +13,15 @@ class Category extends Model {
 	];
 
 	public function parent(){
-		return $this->belongsTo('App\Category','parent_id','id')->first();
+		return $this->belongsTo(Category::class,'parent_id','id')->first();
 	}
 
 	public function children(){
-		return $this->hasMany('App\Category','parent_id','id');
+		return $this->hasMany(Category::class,'parent_id','id');
 	}
 
 	public function products(){
-		return $this->belongsToMany('App\Product','products_categories','category_id','product_id')->withTimestamps();
+		return $this->belongsToMany(Product::class,'products_categories','category_id','product_id')->withTimestamps();
 	}
 
 	public function isRoot(){

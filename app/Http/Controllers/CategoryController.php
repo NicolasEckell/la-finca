@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Category;
+use App\Models\Category;
 use App\Services\CategoryService;
 use Laracasts\Flash\Flash;
 
