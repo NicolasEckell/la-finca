@@ -106,7 +106,7 @@
                             </div>
                         @endfor
                     </div>
-                    <a class="btn btn-primary mt-3" onclick="addCategory()">
+                    <a class="btn btn-success mt-3" onclick="addCategory()">
                         <span style="color: white">
                             + Categoria
                         </span>
@@ -114,7 +114,7 @@
                 </div>
             </div>
             <div class="row mt-5 justify-content-end">
-                <button class="btn btn-success" type="submit">
+                <button class="btn btn-primary" type="submit">
                     <span style="color: white">
                         GUARDAR
                     </span>

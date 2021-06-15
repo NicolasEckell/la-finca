@@ -51,14 +51,14 @@ class Product extends Model {
 
     public function variant(){
         if($this->variant_id){
-            return $this->belongsTo('App\Variant','variant_id','id')->first();
+            return $this->belongsTo(Variant::class,'variant_id','id')->first();
         }
         return null;
     }
 
     public function getVariant(){
         if($this->variant_id){
-            $variant = $this->belongsTo('App\Variant','variant_id','id')->first();
+            $variant = $this->belongsTo(Variant::class,'variant_id','id')->first();
             return 'ID '.$variant->id.': '.$variant->variants;
         }
         return "";
